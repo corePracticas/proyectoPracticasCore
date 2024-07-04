@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.context.annotation.Primary;
 
 import java.time.LocalDate;
@@ -25,4 +26,7 @@ public class Client {
     private String password;
     private LocalDate created;
     private LocalDate updated;
+
+    @OneToMany(mappedBy = "client")
+    private java.util.List<Rent> rents;
 }
