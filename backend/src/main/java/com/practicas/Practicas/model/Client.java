@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import org.springframework.context.annotation.Primary;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -26,7 +26,6 @@ public class Client {
     private String password;
     private LocalDate created;
     private LocalDate updated;
-
     @OneToMany(mappedBy = "client")
-    private java.util.List<Rent> rents;
+    private List<Rent> rents;
 }
