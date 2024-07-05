@@ -21,16 +21,6 @@ public class SecurityConfig {
                 .csrf(c -> c.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http ->{
-                    // PUBLIC ENDPOINTS
-                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
-
-                    // PRIVATE ENDPOINTS
-                    http.requestMatchers(HttpMethod.GET, "/method/get").hasAuthority("READ");
-                    http.requestMatchers(HttpMethod.POST, "/method/post").hasAuthority("CREATE");
-                    http.requestMatchers(HttpMethod.DELETE, "/method/delete").hasAuthority("DELETE");
-                    http.requestMatchers(HttpMethod.PUT, "/method/put").hasAuthority("UPDATE");
-
-                    // REMOVE THIS AND MAKE SURE USER IS AUTHENTICATED
                     http.anyRequest().permitAll();
                 })
                 .build();
