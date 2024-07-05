@@ -20,11 +20,11 @@ public class Client {
     private int id;
     @Column(length = 60,nullable = false)
     private String name;
-    @Column(length = 30,unique = true,nullable = false)
+    @Column(length = 30,unique = true, nullable = false)
     private String email;
     @Column(length = 255,nullable = false)
     private String password;
-    private LocalDate created;
+    private LocalDate created = LocalDate.now();
     private LocalDate updated;
     @OneToMany(mappedBy = "client")
     private List<Rent> rents;
