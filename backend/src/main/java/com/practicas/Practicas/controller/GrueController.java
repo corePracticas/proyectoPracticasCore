@@ -1,8 +1,7 @@
 package com.practicas.Practicas.controller;
 
-import com.practicas.Practicas.model.Crane;
-import com.practicas.Practicas.model.Rent;
-import com.practicas.Practicas.service.ICraneService;
+import com.practicas.Practicas.model.Grue;
+import com.practicas.Practicas.service.IGrueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,34 +10,55 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/craners")
-public class CraneController {
+@RequestMapping("/api/grues")
+public class GrueController {
     @Autowired
-    ICraneService craneService;
+    IGrueService grueService;
 
     @PostMapping
-    public ResponseEntity <Crane> createCraner(@RequestBody Crane crane){
-        crane.setAvailable(true);
-        return new ResponseEntity<>(craneService.create(crane), HttpStatus.OK);
+    public ResponseEntity <Grue> createCraner(@RequestBody Grue grue) {
+        try {
+            if (grueService.findBy(grue.getId())!=null){
+                grue.setAvailable(true);
+                return new ResponseEntity<>(grueService.create(grue), HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping
-    public ResponseEntity <List<Crane>> findAll(){
-        return new ResponseEntity<>(craneService.findAll(),HttpStatus.OK);
-    }
+    public ResponseEntity <List<Grue>> findAll(){
+        try {
+            return new ResponseEntity<>(grueService.findAll(), HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        }
+
     @PutMapping
-    public ResponseEntity <Crane> editCraner(@RequestBody Crane crane){
-        if (craneService.findBy(crane.getId()) != null){
-            return new ResponseEntity<>(craneService.edit(crane),HttpStatus.CREATED);
+    public ResponseEntity <Grue> editCraner(@RequestBody Grue crane){
+        try{
+        if (grueService.findBy(crane.getId()) != null){
+            return new ResponseEntity<>(grueService.edit(crane),HttpStatus.CREATED);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
+    }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        }
     @GetMapping("/{id}")
-    public ResponseEntity <Crane> findByID(@PathVariable(name = "id") long id){
-        if (craneService.findBy(id)!=null){
-            return new ResponseEntity<>(craneService.findBy(id),HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity <Grue> findByID(@PathVariable(name = "id") long id) {
+        try {
+            if (grueService.findBy(id) != null) {
+                return new ResponseEntity<>(grueService.findBy(id), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.practicas.Practicas.repository;
 
-import com.practicas.Practicas.model.Crane;
+import com.practicas.Practicas.model.Grue;
 
-public interface ICraneRepository extends IGeneralRepository <Crane,Long> {
+public interface IGrueRepository extends IGeneralRepository <Grue,Long> {
 }

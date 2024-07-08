@@ -1,6 +1,6 @@
 package com.practicas.Practicas.service;
 
-import com.practicas.Practicas.model.Crane;
+import com.practicas.Practicas.model.Grue;
 
-public interface ICraneService extends ICRUD <Crane,Long> {
+public interface IGrueService extends ICRUD <Grue,Long> {
 }

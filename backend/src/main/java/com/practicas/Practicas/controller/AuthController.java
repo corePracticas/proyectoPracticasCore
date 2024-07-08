@@ -1,10 +1,10 @@
 package com.practicas.Practicas.controller;
 
 import com.practicas.Practicas.config.jwt.JwtUtil;
-import com.practicas.Practicas.dto.Cliente.LoginDto;
 import com.practicas.Practicas.model.ApiJwtResponse;
 import com.practicas.Practicas.model.ApiResponse;
 import com.practicas.Practicas.model.Client;
+import com.practicas.Practicas.model.dto.ClientLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +44,7 @@ public class AuthController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<ApiJwtResponse> loginClient(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<ApiJwtResponse> loginClient(@RequestBody ClientLogin loginDto) {
         try {
             //TODO: Check if user exists if it does return token
             String token = jwtUtil.generateToken(loginDto.getEmail());
