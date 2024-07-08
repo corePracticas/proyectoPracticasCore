@@ -1,10 +1,11 @@
 package com.practicas.Practicas.controller;
 
 import com.practicas.Practicas.config.jwt.JwtUtil;
-import com.practicas.Practicas.dto.Cliente.LoginDto;
 import com.practicas.Practicas.model.ApiJwtResponse;
 import com.practicas.Practicas.model.ApiResponse;
 import com.practicas.Practicas.model.Client;
+import com.practicas.Practicas.model.dto.ClientLogin;
+import com.practicas.Practicas.service.impl.ClientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,8 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtUtil jwtUtil;
-    // Autowire CRUD repo
+    @Autowired
+    private ClientsService clientsService;
 
     private Client formatearCliente(Client c){
         c.setName(c.getName().trim());
@@ -34,17 +36,18 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> registerClient(@RequestBody Client newClient) {
         try{
+            Client client = new Client();
             if(newClient == null){
-                return new ResponseEntity<>(new ApiResponse(false, "La información del cliente debe estar completa"), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new ApiResponse(false, "El cliente debe estar en el formulario"), HttpStatus.BAD_REQUEST);
             }
-            //TODO: Añadir lógica y validaciones
+
             return new ResponseEntity<>(new ApiResponse(true, "Cliente "+ newClient.getName() + " se ha registrado correctamente"), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<ApiJwtResponse> loginClient(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<ApiJwtResponse> loginClient(@RequestBody ClientLogin loginDto) {
         try {
             //TODO: Check if user exists if it does return token
             String token = jwtUtil.generateToken(loginDto.getEmail());
@@ -62,22 +65,22 @@ public class AuthController {
             return new ResponseEntity<>(new ApiJwtResponse(false, e.getMessage(), "ERROR"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/status/{email}")
-    public ResponseEntity<ApiResponse> checkStatus(@PathVariable String email, @RequestHeader("Authorization") String token){
+    @GetMapping("/status/{id}")
+    public ResponseEntity<ApiResponse> checkStatus(@PathVariable(name = "id") String id, @RequestHeader("Authorization") String token){
         try {
             ApiResponse response = new ApiResponse();
 
-            if(email.isEmpty()){
-                return new ResponseEntity<>(new ApiResponse(false, "El email no puede estar vacío"), HttpStatus.BAD_REQUEST);
+            if(id.isEmpty()){
+                return new ResponseEntity<>(new ApiResponse(false, "El id no puede estar vacío"), HttpStatus.BAD_REQUEST);
             }
-            if(jwtUtil.validateToken(token, email.toLowerCase().trim())){
+            if(jwtUtil.validateToken(token, id.toLowerCase().trim())){
                 response.setSuccess(true);
-                response.setMessage("Cliente con email: " + email + " está activo");
+                response.setMessage("Cliente con id: " + id + " está activo");
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }else {
                 System.out.println("Token invalido");
                 response.setSuccess(false);
-                response.setMessage("Cliente con email: " + email + " no está activo");
+                response.setMessage("Cliente con id: " + id + " no está activo");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
         }
