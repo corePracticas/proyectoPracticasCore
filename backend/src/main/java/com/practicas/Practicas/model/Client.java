@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "client")
+@Table(name = "clients")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,7 +21,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Size(min = 6, max = 60, message = "El nombre debe tener entre 6 y 60 caracteres")
+    @Size(min = 3, max = 60, message = "El nombre debe tener entre 6 y 60 caracteres")
     @Column(length = 60, nullable = false)
     private String name;
     @Size(min = 6, max = 30, message = "El email debe tener entre 6 y 30 caracteres")

@@ -1,11 +1,11 @@
 <div class="form-group">
   <p-floatLabel>
-    <input pInputText id="username" [(ngModel)]="username" />
-    <label for="username">Username</label>
+    <input pInputText id="email" [(ngModel)]="clientLogin.email" />
+    <label for="email">Email</label>
   </p-floatLabel>
   <p-floatLabel>
-    <input pInputText id="username" [(ngModel)]="username" />
-    <label for="username">Username</label>
+    <input pInputText id="password" [(ngModel)]="clientLogin.password" type="password" />
+    <label for="password">Password</label>
   </p-floatLabel>
-  <p-button label="Login"></p-button>
+  <p-button label="Login" (onClick)="loginClient()"></p-button>
 </div>

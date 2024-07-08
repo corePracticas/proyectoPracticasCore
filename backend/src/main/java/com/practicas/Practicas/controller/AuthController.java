@@ -6,6 +6,7 @@ import com.practicas.Practicas.model.ApiResponse;
 import com.practicas.Practicas.model.Client;
 import com.practicas.Practicas.model.dto.ClientLogin;
 import com.practicas.Practicas.service.impl.ClientsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,20 +35,23 @@ public class AuthController {
     };
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> registerClient(@RequestBody Client newClient) {
+    public ResponseEntity<ApiResponse> registerClient(@Valid @RequestBody Client newClient) {
         try{
             Client client = new Client();
             if(newClient == null){
                 return new ResponseEntity<>(new ApiResponse(false, "El cliente debe estar en el formulario"), HttpStatus.BAD_REQUEST);
             }
-
+            if(newClient.getName().isEmpty() || newClient.getEmail().isEmpty() || newClient.getPassword().isEmpty()){
+                return new ResponseEntity<>(new ApiResponse(false, "Los campos no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
+            }
+            clientsService.create(formatearCliente(newClient));
             return new ResponseEntity<>(new ApiResponse(true, "Cliente "+ newClient.getName() + " se ha registrado correctamente"), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<ApiJwtResponse> loginClient(@RequestBody ClientLogin loginDto) {
+    public ResponseEntity<ApiJwtResponse> loginClient(@Valid @RequestBody ClientLogin loginDto) {
         try {
             //TODO: Check if user exists if it does return token
             String token = jwtUtil.generateToken(loginDto.getEmail());
