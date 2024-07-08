@@ -25,10 +25,8 @@ public class Rent {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-    //private Crane crane;
-    //Entidad pendiente de crear
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "crane_id", nullable = false)
     private Crane crane;
-     */
+
 }

@@ -7,6 +7,8 @@ import com.practicas.Practicas.service.IClientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientsService extends ICRUDimpl <Client,Long> implements IClientsService {
     @Autowired
@@ -16,4 +18,6 @@ public class ClientsService extends ICRUDimpl <Client,Long> implements IClientsS
     protected IGeneralRepository<Client, Long> getRepo() {
         return clientsRepository;
     }
+
+
 }
