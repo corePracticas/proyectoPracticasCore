@@ -17,7 +17,7 @@ import java.util.List;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(length = 60,nullable = false)
     private String name;
     @Column(length = 30,unique = true, nullable = false)

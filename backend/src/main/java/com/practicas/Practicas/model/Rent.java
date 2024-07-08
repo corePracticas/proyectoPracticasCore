@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(nullable = false)
     private double price;
     private LocalDate started;
