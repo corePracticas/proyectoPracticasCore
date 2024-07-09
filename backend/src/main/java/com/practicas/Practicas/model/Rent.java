@@ -27,11 +27,6 @@ public class Rent {
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
     @ManyToOne
-
-    @JoinColumn(name = "crane_id", nullable = false)
-    private Grue Grue;
-
-
     @JoinColumn(name = "grue_id", nullable = false)
     private Grue grue;
 }
