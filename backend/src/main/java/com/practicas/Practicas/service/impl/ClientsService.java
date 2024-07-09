@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientsService extends ICRUDimpl <Client,Long> implements IClientsService {
     @Autowired
@@ -19,9 +21,11 @@ public class ClientsService extends ICRUDimpl <Client,Long> implements IClientsS
         return clientsRepository;
     }
 
+
     @Override
     @Query("SELECT c FROM Client c WHERE c.email = :email")
     public Client findByEmail(@Param("email") String email) {
         return clientsRepository.findByEmail(email);
     }
+
 }

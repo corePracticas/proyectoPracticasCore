@@ -30,3 +30,4 @@ public class Rent {
     @JoinColumn(name = "grue_id", nullable = false)
     private Grue grue;
 }
+

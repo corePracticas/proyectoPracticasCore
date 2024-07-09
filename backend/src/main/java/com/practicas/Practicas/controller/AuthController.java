@@ -39,7 +39,7 @@ public class AuthController {
         c.setEmail(c.getEmail().toLowerCase().trim());
         c.setPassword(passwordEncoder.encode(c.getPassword()));
         return c;
-    };
+    }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> registerClient(@Valid @RequestBody Client newClient) {
@@ -60,6 +60,7 @@ public class AuthController {
     }
     @PostMapping("/login")
     public ResponseEntity<ApiJwtResponse> loginClient(@Valid @RequestBody ClientLogin loginDto) {
+
         try {
             String token = jwtUtil.generateToken(loginDto.getEmail());
             ApiJwtResponse response = new ApiJwtResponse();
