@@ -1,4 +1,7 @@
+<section class="form-section">
+<div class="side-img" [style]="backgroundImage"></div>
 <div class="form-group">
+  <h2 class="gradient-text">Join Grue Solutions!</h2>
   <p-floatLabel>
     <input pInputText id="name" [(ngModel)]="client.name" />
     <label for="name">Name</label>
@@ -11,5 +14,7 @@
     <input pInputText id="password" [(ngModel)]="client.password" type="password"/>
     <label for="password">Password</label>
   </p-floatLabel>
+  <p>Already have an account? <a routerLink="/login" class="register-link"> Login</a></p>
   <p-button label="Register" (onClick)="addClient()"></p-button>
 </div>
+</section>

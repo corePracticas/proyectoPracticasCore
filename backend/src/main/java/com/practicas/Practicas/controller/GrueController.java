@@ -16,7 +16,7 @@ public class GrueController {
     IGrueService grueService;
 
     @PostMapping
-    public ResponseEntity <Grue> createCraner(@RequestBody Grue grue) {
+    public ResponseEntity <Grue> createCrane(@RequestBody Grue grue) {
         try {
             if (grueService.findBy(grue.getId())!=null){
                 grue.setAvailable(true);
@@ -38,7 +38,7 @@ public class GrueController {
         }
 
     @PutMapping
-    public ResponseEntity <Grue> editCraner(@RequestBody Grue crane){
+    public ResponseEntity <Grue> editCrane(@RequestBody Grue crane){
         try{
         if (grueService.findBy(crane.getId()) != null){
             return new ResponseEntity<>(grueService.edit(crane),HttpStatus.CREATED);
