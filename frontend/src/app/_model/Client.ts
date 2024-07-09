@@ -9,3 +9,8 @@ export type Client = {
   updatedAt: Date;
   rents: Rent[];
 }
+
+export type ClientLogin = {
+  email: string;
+  password: string;
+}

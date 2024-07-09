@@ -1,1 +1,15 @@
-<p>register works!</p>
+<div class="form-group">
+  <p-floatLabel>
+    <input pInputText id="name" [(ngModel)]="client.name" />
+    <label for="name">Name</label>
+  </p-floatLabel>
+  <p-floatLabel>
+    <input pInputText id="email" [(ngModel)]="client.email" />
+    <label for="email">Email</label>
+  </p-floatLabel>
+  <p-floatLabel>
+    <input pInputText id="password" [(ngModel)]="client.password" type="password"/>
+    <label for="password">Password</label>
+  </p-floatLabel>
+  <p-button label="Register" (onClick)="addClient()"></p-button>
+</div>
