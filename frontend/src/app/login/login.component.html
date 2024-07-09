@@ -1,24 +1,28 @@
-<div class="form-group">
-  <p-floatLabel>
-    <input
-      pInputText
-      id="email"
-      minlength="6"
-      [(ngModel)]="clientLogin.email"
-      #name="ngModel"
-    />
-    <label for="email">Email</label>
-  </p-floatLabel>
-  <p-floatLabel>
-    <input
-      pInputText
-      minlength="6"
-      id="password"
-      [(ngModel)]="clientLogin.password"
-      type="password"
-    />
-    <label for="password">Password</label>
-  </p-floatLabel>
-  
-  <p-button label="Login" (onClick)="loginClient()"></p-button>
-</div>
+<section class="form-section">
+  <div class="side-img" [style]="backgroundImage"></div>
+  <div class="form-group">
+    <h2 class="gradient-text">Welcome to Grue Solutions</h2>
+    <p-floatLabel>
+      <input
+        pInputText
+        id="email"
+        minlength="6"
+        [(ngModel)]="clientLogin.email"
+        #name="ngModel"
+      />
+      <label for="email">Email</label>
+    </p-floatLabel>
+    <p-floatLabel>
+      <input
+        pInputText
+        minlength="6"
+        id="password"
+        [(ngModel)]="clientLogin.password"
+        type="password"
+      />
+      <label for="password">Password</label>
+    </p-floatLabel>
+    <p>Don't have an account? <a routerLink="/register" class="register-link">Register</a></p>
+    <p-button label="Login" (onClick)="loginClient()"></p-button>
+  </div>
+</section>

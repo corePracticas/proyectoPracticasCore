@@ -7,11 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { ClientService } from '../_service/client.service';
 import { MessageService } from 'primeng/api';
 import { catchError, throwError } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, InputTextModule, FloatLabelModule, ButtonModule],
+  imports: [FormsModule, InputTextModule, FloatLabelModule, ButtonModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -20,6 +21,7 @@ export class RegisterComponent {
     private clientService: ClientService,
     private messageService: MessageService
   ) {}
+  backgroundImage: string = 'background-image: url("https://picsum.photos/832/1280");';
   client: Client = {
     id: 0,
     name: '',
@@ -44,6 +46,14 @@ export class RegisterComponent {
     });
   }
   addClient(): void {
+    if (
+      this.client.name == '' ||
+      this.client.email == '' ||
+      this.client.password == ''
+    ) {
+      this.showToastError('Please fill all fields');
+      return;
+    }
     this.clientService.registerClient(this.client)
     .pipe(
       catchError((response: any) => {

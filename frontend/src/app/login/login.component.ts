@@ -8,12 +8,12 @@ import { ClientService } from '../_service/client.service';
 import { MessageService } from 'primeng/api';
 import { catchError, throwError } from 'rxjs';
 import { ApiJwtResponse } from '../_model/Api';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, InputTextModule, FloatLabelModule, ButtonModule],
+  imports: [FormsModule, InputTextModule, FloatLabelModule, ButtonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -27,6 +27,7 @@ export class LoginComponent {
     email: '',
     password: '',
   };
+  backgroundImage: string = 'background-image: url("https://picsum.photos/832/1280");';
   showToastError(msg: string) {
     this.messageService.add({
       severity: 'error',

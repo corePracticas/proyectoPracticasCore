@@ -2,6 +2,11 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
+body{
+  margin: 0;
+  padding: 0;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -9,4 +14,5 @@
   margin: 1rem 0;
   gap: 2rem 0;
   align-items: center;
+  width: 100%;
 }
