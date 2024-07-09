@@ -2,6 +2,7 @@ package com.practicas.Practicas.controller;
 
 import com.practicas.Practicas.model.Grue;
 import com.practicas.Practicas.model.Rent;
+import com.practicas.Practicas.model.dto.RentsActives;
 import com.practicas.Practicas.model.enums.RentStatus;
 import com.practicas.Practicas.service.IGrueService;
 import com.practicas.Practicas.service.IRentsService;
@@ -81,6 +82,14 @@ public class RentsController {
                     })
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/rentsActives")
+    public ResponseEntity <List<RentsActives>> findRentsActives(){
+        try{
+            return new ResponseEntity<>(rentsService.findRentsActives(),HttpStatus.OK);
+        }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
