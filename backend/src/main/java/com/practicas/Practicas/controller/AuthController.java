@@ -1,5 +1,7 @@
 package com.practicas.Practicas.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.practicas.Practicas.config.jwt.JwtUtil;
 import com.practicas.Practicas.model.ApiJwtResponse;
 import com.practicas.Practicas.model.ApiResponse;
@@ -13,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,6 +32,9 @@ public class AuthController {
     private ClientsService clientsService;
 
     private Client formatearCliente(Client c){
+        if(c == null){
+            return null;
+        }
         c.setName(c.getName().trim());
         c.setEmail(c.getEmail().toLowerCase().trim());
         c.setPassword(passwordEncoder.encode(c.getPassword()));
@@ -41,6 +48,7 @@ public class AuthController {
             if(newClient == null){
                 return new ResponseEntity<>(new ApiResponse(false, "El cliente debe estar en el formulario"), HttpStatus.BAD_REQUEST);
             }
+
             if(newClient.getName().isEmpty() || newClient.getEmail().isEmpty() || newClient.getPassword().isEmpty()){
                 return new ResponseEntity<>(new ApiResponse(false, "Los campos no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
             }
@@ -53,44 +61,51 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiJwtResponse> loginClient(@Valid @RequestBody ClientLogin loginDto) {
         try {
-            //TODO: Check if user exists if it does return token
             String token = jwtUtil.generateToken(loginDto.getEmail());
             ApiJwtResponse response = new ApiJwtResponse();
-            // TODO: Remplazar con lógica de autenticación
-            boolean isUser = true;
-            if(isUser){
+            Client c = clientsService.findByEmail(loginDto.getEmail());
+            if(c == null) {
+                return new ResponseEntity<>(new ApiJwtResponse(false, "El email no existe", "ERROR", ""), HttpStatus.NOT_FOUND);
+            }
+            c.setEmail(c.getEmail().toLowerCase().trim());
+            if(!c.getEmail().isEmpty() && passwordEncoder.matches(loginDto.getPassword(), c.getPassword())){
                 response.setSuccess(true);
                 response.setMessage("Login exitoso");
                 response.setToken(token);
+                response.setUsername(c.getEmail());
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-            return new ResponseEntity<>(new ApiJwtResponse(false, "Credenciales incorrectas", "ERROR"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ApiJwtResponse(false, "Credenciales incorrectas", "ERROR", ""), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            return new ResponseEntity<>(new ApiJwtResponse(false, e.getMessage(), "ERROR"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiJwtResponse(false, e.getMessage(), "ERROR", ""), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/status/{id}")
-    public ResponseEntity<ApiResponse> checkStatus(@PathVariable(name = "id") String id, @RequestHeader("Authorization") String token){
+    @GetMapping("/status/{username}")
+    public ResponseEntity<ApiResponse> checkStatus(
+            @PathVariable(name = "username") String username,
+            @RequestHeader("Authorization") String token) {
+
         try {
             ApiResponse response = new ApiResponse();
 
-            if(id.isEmpty()){
-                return new ResponseEntity<>(new ApiResponse(false, "El id no puede estar vacío"), HttpStatus.BAD_REQUEST);
+            if (username.isEmpty()) {
+                return new ResponseEntity<>(new ApiResponse(false, "El username no puede estar vacío"), HttpStatus.BAD_REQUEST);
             }
-            if(jwtUtil.validateToken(token, id.toLowerCase().trim())){
+
+            if (jwtUtil.validateToken(token, username)) {
                 response.setSuccess(true);
-                response.setMessage("Cliente con id: " + id + " está activo");
+                response.setMessage("Cliente con id: " + username + " está activo");
                 return new ResponseEntity<>(response, HttpStatus.OK);
-            }else {
+            } else {
                 System.out.println("Token invalido");
                 response.setSuccess(false);
-                response.setMessage("Cliente con id: " + id + " no está activo");
+                response.setMessage("Cliente con id: " + username + " no está activo");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

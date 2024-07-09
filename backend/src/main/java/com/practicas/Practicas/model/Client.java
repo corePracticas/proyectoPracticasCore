@@ -31,7 +31,7 @@ public class Client {
     @Size(min = 6, max = 60, message = "La contraseña debe tener entre 6 y 60 caracteres")
     private String password;
     private LocalDate createdAt = LocalDate.now();
-    private LocalDate updatedAt;
+    private LocalDate updatedAt = LocalDate.now();
 
     @OneToMany(mappedBy = "client")
     private List<Rent> rents;

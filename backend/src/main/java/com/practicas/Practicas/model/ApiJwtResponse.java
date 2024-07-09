@@ -11,4 +11,5 @@ public class ApiJwtResponse {
     private boolean success;
     private String message;
     private String token;
+    private String username;
 }

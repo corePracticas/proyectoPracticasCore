@@ -13,14 +13,12 @@ export class ClientService {
     return this.http.post(`${apiUrl}/api/auth/register`, client);
   }
   loginClient(client: ClientLogin) {
-    return this.http
-      .post(`${apiUrl}/api/auth/login`, client)
-
+    return this.http.post(`${apiUrl}/api/auth/login`, client)
   }
-  getSessionStatus(id: number) {
-    return this.http.get(`${apiUrl}/api/auth/status/${id}`, {
+  getSessionStatus(username: string, token: string) {
+    return this.http.get(`${apiUrl}/api/auth/status/${username}`, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        Authorization: `${token}`,
       },
     });
   }

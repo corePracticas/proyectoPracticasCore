@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class PracticasApplication implements CommandLineRunner {
 	@Autowired
 	private ClientsService clientsService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(PracticasApplication.class, args);
 	}
@@ -20,7 +23,7 @@ public class PracticasApplication implements CommandLineRunner {
 		Client testClient = new Client();
 		testClient.setName("jhon");
 		testClient.setEmail("jhon@mail.com");
-		testClient.setPassword("jhon2301");
+		testClient.setPassword(passwordEncoder.encode("jhon2301"));
 		clientsService.create(testClient);
 	}
 }
