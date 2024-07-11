@@ -1,6 +1,7 @@
 package com.practicas.Practicas.service.impl;
 
 import com.practicas.Practicas.model.Rent;
+import com.practicas.Practicas.model.dto.RentStatus;
 import com.practicas.Practicas.model.dto.RentsActives;
 import com.practicas.Practicas.repository.IGeneralRepository;
 import com.practicas.Practicas.repository.IRentsRepository;
@@ -25,4 +26,11 @@ public class RentsService extends ICRUDimpl <Rent,Long> implements IRentsService
     public List<RentsActives> findRentsActives() {
         return rentsRepository.rentsActives();
     }
+
+    @Override
+    public List<RentStatus> findRentStatus(String status) {
+        return rentsRepository.rentStatus(status);
+    }
+
+
 }

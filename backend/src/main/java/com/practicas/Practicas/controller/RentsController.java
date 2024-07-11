@@ -93,6 +93,14 @@ public class RentsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public ResponseEntity<List<com.practicas.Practicas.model.dto.RentStatus>>findRentStatus(String status){
+        List<com.practicas.Practicas.model.dto.RentStatus> aux= rentsService.findRentStatus(status);
+        try{
+            return new ResponseEntity<>(aux,HttpStatus.OK);
+        }catch (Exception e){
+            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     }
 
