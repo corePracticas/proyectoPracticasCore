@@ -1,1 +1,59 @@
-<h1>Home works!</h1>
+<p-menubar [model]="items"></p-menubar>
+
+<div class="landing-container">
+  <h1 id="inicio">Bienvenidos a Alquiler de Grúas</h1>
+  <p>Soluciones profesionales de alquiler de grúas para tus proyectos.</p>
+  <img
+    src="https://datascope.io/wp-content/uploads/2023/08/Fotos-para-portada-blog-24-1024x683.png.webp"
+    alt=""
+  />
+  <div class="features" id="servicios">
+    <p-card header="Variedad de Grúas" class="feature-card">
+      <p>Ofrecemos una amplia gama de grúas para cualquier tipo de proyecto.</p>
+      <img
+        class="home-card-img"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0RsiDrGL8gZig-Fi9QBOKdURvaufjT6exEg&s"
+        alt="Imagen de grúa"
+      />
+    </p-card>
+    <p-card header="Precios Competitivos" class="feature-card">
+      <p>Precios accesibles y planes de alquiler flexibles.</p>
+      <img
+        class="home-card-img"
+        src="https://emprendedores.es/wp-content/uploads/subida-de-precios-1-1024x576.jpg"
+        alt="Imagen de grúa"
+      />
+    </p-card>
+    <p-card header="Soporte Profesional" class="feature-card">
+      <p>
+        Soporte y mantenimiento profesional durante todo el periodo de alquiler.
+      </p>
+      <img
+        class="home-card-img"
+        src="https://mobility-work.com/wp-content/uploads/2021/08/maintenance-logistique-transport-gmao.jpg"
+        alt="Imagen de grúa"
+      />
+    </p-card>
+  </div>
+  <div id="about" class="about">
+    <article>
+      <h2>Sobre Nosotros</h2>
+      <p>
+        Somos una empresa dedicada a ofrecer soluciones de alquiler de grúas de
+        alta calidad,<br />
+        adaptadas a las necesidades específicas de nuestros clientes. <br />
+        Nuestro equipo está compuesto por profesionales con amplia experiencia
+        en el sector,<br />
+        comprometidos en brindar un servicio excepcional y garantizar la
+        satisfacción de nuestros clientes.
+      </p>
+    </article>
+    <div class="about-img" [style]="backgroundAboutImg" alt="Imagen sobre nosotros"></div>
+  </div>
+  <footer class="contact" id="contacto">
+    <h2>Contacto</h2>
+    <p>Para más información, contáctanos en:</p>
+    <p><i class="pi pi-envelope"></i> {{ mail }}</p>
+    <p><i class="pi pi-phone"></i> +123 456 7890</p>
+  </footer>
+</div>

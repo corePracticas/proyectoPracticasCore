@@ -1,0 +1,40 @@
+.landing-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  width: 30%;
+  height: 100%;
+  flex: 1;
+}
+
+.contact {
+  margin-top: 2rem;
+}
+.home-card-img{
+  width: 320px;
+  height: auto;
+}
+.about{
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 1rem;
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-around;
+}
+.about-img {
+  width: 480px;
+  height: 240px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

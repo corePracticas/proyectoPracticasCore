@@ -8,3 +8,7 @@ Proyecto de practicas en Hazerta, los miembros del grupo son:
 * [Jhonatan](https://github.com/jnunez2301)
 
 Este proyecto tiene como tutor a [Sergio González]()
+
+## Montar el proyecto
+
+Para montar el proyecto es necesario crear una base de datos con PostgreSQL con el nombre de `test_db`.

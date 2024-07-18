@@ -14,3 +14,8 @@ export type ClientLogin = {
   email: string;
   password: string;
 }
+export type ClientMinified = {
+  id: number;
+  name: string;
+  rents: Rent[]
+}
