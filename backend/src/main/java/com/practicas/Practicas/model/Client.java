@@ -1,5 +1,6 @@
 package com.practicas.Practicas.model;
 
+import com.practicas.Practicas.model.enums.Roles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,7 @@ public class Client {
     private String password;
     private LocalDate createdAt = LocalDate.now();
     private LocalDate updatedAt = LocalDate.now();
+    private Roles roles = Roles.USER;
 
     @OneToMany(mappedBy = "client")
     private List<Rent> rents;
