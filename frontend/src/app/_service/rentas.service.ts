@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl } from '../util/sharedVariables';
+import { Rent } from '../_model/Rent';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,9 @@ export class RentasService {
   }
   getRentById(id: number){
     return this.http.get(`${apiUrl}/api/alquileres/${id}`, this.tokenConfig);
+  }
+  addRent(rent: Rent){
+    return this.http.post(`${apiUrl}/api/alquileres`, rent, this.tokenConfig);
   }
   updateRentById(id: number){
     return this.http.put(`${apiUrl}/api/alquileres/${id}`, this.tokenConfig);

@@ -1,35 +1,68 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { GruasService } from '../_service/gruas.service';
-import { RentasService } from '../_service/rentas.service';
-import { ClientService } from '../_service/client.service';
-import { ClientesService } from '../_service/clientes.service';
-
+import { Router, RouterModule } from '@angular/router';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, MenuModule, DialogModule, ButtonModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit{
-  constructor( 
-    private grueService: GruasService,
-    private rentService: RentasService,
-    private clientService: ClientesService
-   ){}
+export class DashboardComponent implements OnInit {
+  items: MenuItem[] | undefined;
+  constructor(private router: Router, private messageService: MessageService) {}
+  logoutDialogVisible: boolean = false;
+  showSessionDialog() {
+    this.logoutDialogVisible = true;
+  }
+  closeSessionDialog() {
+    this.logoutDialogVisible = false;
+  }
+  handleLogOut() {
+    sessionStorage.clear();
+    // window.location.reload();
+    this.router.navigate(['login']);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Sesión cerrada',
+      detail: 'Has cerrado la sesión correctamente',
+    });
+  }
   ngOnInit(): void {
-    this.grueService.getAllGrues().subscribe(d => {
-      console.log('GRUAS',d)
-    })
-    this.rentService.getAllRents().subscribe(d => {
-      console.log('RENTAS', d)
-    })
-    this.clientService.getAllClients().subscribe(d => {
-      console.log('Clientes', d)
-    })
-    this.clientService.getClientById(1).subscribe(d => {
-      console.log('Cliente por id', d)
-    })
+    this.items = [
+      {
+        label: 'Inicio',
+        icon: 'pi pi-home',
+        command: () => this.router.navigate(['']),
+      },
+      {
+        label: 'Gruas',
+        icon: 'pi pi-truck',
+        command: () => this.router.navigate(['dashboard/gruas']),
+      },
+      {
+        label: 'Rentas',
+        icon: 'pi pi-address-book',
+        command: () => this.router.navigate(['dashboard/rentas']),
+      },
+      {
+        label: 'Salir',
+        icon: 'pi pi-times',
+        command: () => {
+          this.showSessionDialog();
+          //   sessionStorage.clear();
+          //   // window.location.reload();
+          //   this.router.navigate(['login']);
+          //   this.messageService.add({
+          //     severity: 'success',
+          //     summary: 'Sesión cerrada',
+          //     detail: 'Has cerrado la sesión correctamente',
+          //   });
+        },
+      },
+    ];
   }
 }

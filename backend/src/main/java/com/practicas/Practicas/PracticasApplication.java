@@ -46,7 +46,7 @@ public class PracticasApplication implements CommandLineRunner {
 
 			// GRUE
 			grue.setName("Grua " + i);
-			grue.setType(i % 2 == 0 ? "Grua Normal" : "Grua Todoterreno");
+			grue.setType(i % 2 == 0 ? "Normal" : "Todoterreno");
 			grue.setCapacity(i * 10);
 			grue.setLocation(i % 2 == 0 ? "Madrid" : "Valencia");
 			grue.setAvailable(i % 2 == 0);

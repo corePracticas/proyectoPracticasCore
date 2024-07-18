@@ -1,1 +1,41 @@
-<p>grues works!</p>
+<div class="items-container">
+  @for (grua of $listaGruas; track $index) {
+  <div class="item-card">
+    <div class="item-card-header">
+      <h2>{{ grua.name }}</h2>
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/45/45868.png"
+        alt="Grue Image"
+      />
+      <div style="display: flex; gap: 1rem">
+        <!-- TODO: Cambiar color en base al tipo de grúa -->
+        <p class="grue-type">{{ grua.type }}</p>
+        <p class="grue-type" style="background-color: orange; color: white">
+          {{ grua.pricePerMonth }}€/mes
+        </p>
+      </div>
+    </div>
+    <div class="item-card-body">
+      <div>
+        <h3>Ficha técnica</h3>
+        <hr />
+        <div class="grue-info">
+          <div>
+            <h4>Capacidad</h4>
+            <img src="https://cdn-icons-png.flaticon.com/512/3737/3737129.png" width="120" alt="Capacidad">
+            <p style="color: green; font-weight: bold;">{{grua.capacity}}kg</p>
+          </div>
+          <div>
+            <h4>Localidad</h4>
+            <img src="https://cdn-icons-png.flaticon.com/512/854/854929.png" width="120" alt="Capacidad">
+            <p style="color: lightslategrey; font-weight: bold;">{{grua.location}}</p>
+          </div>
+        </div>
+        <!-- TODO: En lugar de hacer handleRentGrue debe abrir un dialogo con un formulario a llenar con los conceptos definidos en su componente-->
+        <p-button (onClick)="handleRentGrue(grua.id)" label="Contratar" [raised]="true"></p-button>
+      </div>
+    </div>
+  </div>
+  }
+
+</div>
