@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/alquileres")
+@CrossOrigin("http://localhost:4200")
 public class RentsController {
     @Autowired
     IRentsService rentsService;
