@@ -5,19 +5,31 @@ import { ButtonModule } from 'primeng/button';
 import { RentasService } from '../_service/rentas.service';
 import { ClientesService } from '../_service/clientes.service';
 import { Client } from '../_model/Client';
-import { Rent, RentStatus } from '../_model/Rent';
+import { Rent, RentForm, RentStatus } from '../_model/Rent';
 import { MessageService } from 'primeng/api';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-grues',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [ButtonModule, FormsModule, DialogModule, InputTextModule, FloatLabelModule, InputNumberModule],
   templateUrl: './grues.component.html',
   styleUrl: './grues.component.css',
 })
 export class GruesComponent implements OnInit {
   $listaGruas: Grue[] = [];
   $currentClient: Client | null = null;
+  selectedGrueId: number  = 0;
+  rentForm: RentForm = {
+    startDate: null,
+    endDate: null,
+    months: 0
+  }
+  isFormOpen: boolean = false;
   email: string | null = sessionStorage.getItem('username');
   // username:
   constructor(
@@ -34,21 +46,29 @@ export class GruesComponent implements OnInit {
       this.$currentClient = client;
     })
   }
-  handleRentGrue(id: number): void {
+  handleRentGrue(): void {
     if(!this.$currentClient) return;
-    this.gruaService.getGrueById(id).subscribe(grue => {
+    this.gruaService.getGrueById(this.selectedGrueId).subscribe(grue => {
       const rentToAdd: Rent = {
         client: this.$currentClient,
-        // TODO: Estas fechas deben ser modificadas en un modal
         createdAt: new Date(),
-        startDate: new Date(),
+        startDate: this.rentForm.startDate,
         updatedAt: new Date(),
-        endDate: new Date() /* + 7  days*/,
-        // TODO: Estas fechas deben ser modificadas en un modal
+        endDate: this.rentForm.endDate,
         grue: grue,
         status: RentStatus.PENDING,
-        // TODO: El precio debe ser calculado en base a los meses
-        totalPrice: grue.pricePerMonth /* * months */,
+        totalPrice: grue.pricePerMonth  * this.rentForm.months,
+      }
+      this.closeFormDialog()
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Petición recibida',
+        detail: 'Hemos recibido tu solicitud correctamente'
+      })
+      this.rentForm = {
+        startDate: null,
+        endDate: null,
+        months: 0
       }
       this.rentService.addRent(rentToAdd).subscribe(rent => {
         console.log(rent);
@@ -59,5 +79,12 @@ export class GruesComponent implements OnInit {
         })
       })
     })
+  }
+  openFormDialog(id: number){
+    this.isFormOpen = true;
+    this.selectedGrueId = id;
+  }
+  closeFormDialog(){
+    this.isFormOpen = false;
   }
 }

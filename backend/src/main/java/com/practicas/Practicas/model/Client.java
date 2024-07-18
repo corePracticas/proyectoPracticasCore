@@ -31,7 +31,6 @@ public class Client {
     @Column(length = 30, unique = true, nullable = false)
     private String email;
     @Size(min = 6, max = 60, message = "La contraseña debe tener entre 6 y 60 caracteres")
-    @JsonIgnore
     private String password;
     private LocalDate createdAt = LocalDate.now();
     private LocalDate updatedAt = LocalDate.now();

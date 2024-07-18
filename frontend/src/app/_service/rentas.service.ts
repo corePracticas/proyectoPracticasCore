@@ -17,11 +17,18 @@ export class RentasService {
       }
     };
   }
+  private get currentEmail(){
+    const email: string | null = sessionStorage.getItem('username');
+    return email;
+  }
   getAllRents(){
-    return this.http.get(`${apiUrl}/api/alquileres`, this.tokenConfig);
+    return this.http.get<Rent[]>(`${apiUrl}/api/alquileres`, this.tokenConfig);
   }
   getRentById(id: number){
-    return this.http.get(`${apiUrl}/api/alquileres/${id}`, this.tokenConfig);
+    return this.http.get<Rent>(`${apiUrl}/api/alquileres/${id}`, this.tokenConfig);
+  }
+  getRentByCurrentUser(){
+    return this.http.get<Rent[]>(`${apiUrl}/api/alquileres/email/${this.currentEmail}`, this.tokenConfig);
   }
   addRent(rent: Rent){
     return this.http.post(`${apiUrl}/api/alquileres`, rent, this.tokenConfig);

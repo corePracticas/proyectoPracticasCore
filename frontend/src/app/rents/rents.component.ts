@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table'
+import { Rent } from '../_model/Rent';
+import { RentasService } from '../_service/rentas.service';
 
 @Component({
   selector: 'app-rents',
@@ -9,6 +11,12 @@ import { TableModule } from 'primeng/table'
   templateUrl: './rents.component.html',
   styleUrl: './rents.component.css'
 })
-export class RentsComponent {
-
+export class RentsComponent implements OnInit{
+  $rentsList: Rent[]  = [];
+  constructor(private rentService: RentasService) {}
+  ngOnInit(): void {
+    this.rentService.getRentByCurrentUser().subscribe(rents => {
+      this.$rentsList = rents;
+    });
+  }
 }

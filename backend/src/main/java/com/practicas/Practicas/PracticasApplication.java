@@ -32,16 +32,14 @@ public class PracticasApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 1; i < 11; i++) {
 			Client client = new Client();
 			Grue grue = new Grue();
 			// CLIENT
 			client.setName("user" + i);
-			client.setEmail("user" + i + "@mail.com");  // Unique email address
+			client.setEmail("user" + i + "@mail.com");
 			client.setPassword(passwordEncoder.encode("jhon2301"));
-			client.setRents(new ArrayList<>()); // Initialize the rents list
 
-			// Save the client first
 			clientsService.create(client);
 
 			// GRUE
@@ -52,24 +50,8 @@ public class PracticasApplication implements CommandLineRunner {
 			grue.setAvailable(i % 2 == 0);
 			grue.setPricePerMonth(i * 10);
 			grue.setUpdatedAt(LocalDate.now());
-			grue.setRents(new ArrayList<>()); // Initialize the rents list
 
-			// Save the grue first
 			grueService.create(grue);
-
-			// Rent
-			Rent rent = new Rent();
-			rent.setStartDate(LocalDate.now().minusDays(i * 2));
-			rent.setEndDate(LocalDate.now().plusDays(i * 2));
-			rent.setTotalPrice(100.0 * i);
-			rent.setStatus(i % 2 == 0 ? RentStatus.CONFIRMED : RentStatus.PENDING);
-			rent.setCreatedAt(LocalDate.now().minusDays(1)); // Fixed value for createdAt
-			rent.setUpdatedAt(LocalDate.now());
-			rent.setClient(client);
-			rent.setGrue(grue);
-
-			// Now save the rent
-			rentsService.create(rent);
 		}
 
 	}

@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { ClientService } from '../_service/client.service';
 import { MessageService } from 'primeng/api';
 import { catchError, throwError } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +19,8 @@ import { RouterModule } from '@angular/router';
 export class RegisterComponent {
   constructor(
     private clientService: ClientService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
   backgroundImage: string = 'background-image: url("https://picsum.photos/832/1280");';
   client: Client = {
@@ -83,6 +84,7 @@ export class RegisterComponent {
         return;
       }
       this.showToastSuccess('Registrado correctamente');
+      this.router.navigate(['login'])
     });
     /*  this.clientService.create(this.client).subscribe((data) => {
       console.log(data);
