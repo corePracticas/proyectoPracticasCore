@@ -103,7 +103,7 @@ public class RentsController {
                     grue.setAvailable(true);
                     grueService.edit(grue);
                 }
-                rentsService.delete(id);
+                rentsService.deleteBy(id);
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
