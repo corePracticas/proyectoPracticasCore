@@ -6,10 +6,15 @@ export enum RentStatus{
   CONFIRMED = 'CONFIRMED',
   CANCELED = 'CANCELED',
 }
+export type RentForm = {
+  startDate: Date | null,
+  endDate: Date | null,
+  months: number,
+}
 export type Rent = {
   id?: number;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
   totalPrice: number;
   status: RentStatus;
   createdAt: Date;

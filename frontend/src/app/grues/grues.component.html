@@ -22,20 +22,79 @@
         <div class="grue-info">
           <div>
             <h4>Capacidad</h4>
-            <img src="https://cdn-icons-png.flaticon.com/512/3737/3737129.png" width="120" alt="Capacidad">
-            <p style="color: green; font-weight: bold;">{{grua.capacity}}kg</p>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3737/3737129.png"
+              width="120"
+              alt="Capacidad"
+            />
+            <p style="color: green; font-weight: bold">{{ grua.capacity }}kg</p>
           </div>
           <div>
             <h4>Localidad</h4>
-            <img src="https://cdn-icons-png.flaticon.com/512/854/854929.png" width="120" alt="Capacidad">
-            <p style="color: lightslategrey; font-weight: bold;">{{grua.location}}</p>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/854/854929.png"
+              width="120"
+              alt="Capacidad"
+            />
+            <p style="color: lightslategrey; font-weight: bold">
+              {{ grua.location }}
+            </p>
           </div>
         </div>
         <!-- TODO: En lugar de hacer handleRentGrue debe abrir un dialogo con un formulario a llenar con los conceptos definidos en su componente-->
-        <p-button (onClick)="handleRentGrue(grua.id)" label="Contratar" [raised]="true"></p-button>
+        <p-button
+          (onClick)="openFormDialog(grua.id)"
+          label="Contratar"
+          [raised]="true"
+        ></p-button>
       </div>
     </div>
   </div>
   }
-
+  <p-dialog
+    [modal]="true"
+    header="Solicitud Grúa"
+    [(visible)]="isFormOpen"
+    [style]="{ width: '25rem' }"
+    [closable]="true"
+  >
+    <div class="form-group">
+      <div></div>
+      <p-floatLabel style="width: 100%;">
+        <p-inputNumber
+          [(ngModel)]="rentForm.months"
+          [showButtons]="true"
+          inputId="months"
+          [min]="1"
+          [max]="12"
+        />
+        <label for="months">Months</label>
+      </p-floatLabel>
+      <div style="display: flex; gap: 1rem;">
+        <div style="display: flex; flex-direction: column;">
+          <label for="startDate">Fecha de Comienzo</label>
+          <input 
+          pInputText
+          id="startDate"
+          type="date"
+          [(ngModel)]="rentForm.startDate"
+          #name="ngModel"
+          />
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <label for="endDate">Fecha de Finalización</label>
+          <input 
+          pInputText
+          id="endDate"
+          type="date"
+          [(ngModel)]="rentForm.endDate"
+          #name="ngModel"
+          />
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; width: 100%;">
+        <p-button label="Enviar" severity="success" [raised]="true" (onClick)="handleRentGrue()"></p-button>
+      </div>
+    </div>
+  </p-dialog>
 </div>
