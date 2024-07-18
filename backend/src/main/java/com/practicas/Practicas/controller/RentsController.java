@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/rents")
+@RequestMapping("/api/alquileres")
 public class RentsController {
     @Autowired
     IRentsService rentsService;
@@ -41,7 +41,7 @@ public class RentsController {
     }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Rent> SearchOrder(@PathVariable(name = "id") long id) {
@@ -93,7 +93,25 @@ public class RentsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteRent(@PathVariable(name = "id") long id) {
+        try {
+            Rent rent = rentsService.findBy(id);
+            if (rent != null) {
+                Grue grue = rent.getGrue();
+                if (grue != null) {
+                    grue.setAvailable(true);
+                    grueService.edit(grue);
+                }
+                rentsService.delete(id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+}
 
 
