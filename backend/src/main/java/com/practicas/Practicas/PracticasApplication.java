@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class PracticasApplication implements CommandLineRunner {
@@ -36,24 +35,24 @@ public class PracticasApplication implements CommandLineRunner {
 		for (int i = 0; i < 10; i++) {
 			Client client = new Client();
 			Grue grue = new Grue();
-			List<Rent> rentList = new ArrayList<>();
-
 			// CLIENT
 			client.setName("user" + i);
 			client.setEmail("user" + i + "@mail.com");  // Unique email address
 			client.setPassword(passwordEncoder.encode("jhon2301"));
+			client.setRents(new ArrayList<>()); // Initialize the rents list
 
 			// Save the client first
 			clientsService.create(client);
 
 			// GRUE
 			grue.setName("Grua " + i);
-			grue.setType(i % 2 == 0 ? "Grua Normal": "Grua Todoterreno");
+			grue.setType(i % 2 == 0 ? "Normal" : "Todoterreno");
 			grue.setCapacity(i * 10);
 			grue.setLocation(i % 2 == 0 ? "Madrid" : "Valencia");
 			grue.setAvailable(i % 2 == 0);
 			grue.setPricePerMonth(i * 10);
 			grue.setUpdatedAt(LocalDate.now());
+			grue.setRents(new ArrayList<>()); // Initialize the rents list
 
 			// Save the grue first
 			grueService.create(grue);
@@ -68,15 +67,10 @@ public class PracticasApplication implements CommandLineRunner {
 			rent.setUpdatedAt(LocalDate.now());
 			rent.setClient(client);
 			rent.setGrue(grue);
-			rentList.add(rent);
-
-			// Assign the rents list to grue
-			if(i == 9){
-				grue.setRents(rentList);
-			}
 
 			// Now save the rent
 			rentsService.create(rent);
 		}
+
 	}
 }

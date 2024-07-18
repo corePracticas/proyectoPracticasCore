@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl } from '../util/sharedVariables';
+import { Grue } from '../_model/Grue';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,10 @@ export class GruasService {
   }
 
   getAllGrues(){
-    return this.http.get(`${apiUrl}/api/gruas`, this.tokenConfig);
+    return this.http.get<Grue[]>(`${apiUrl}/api/gruas`, this.tokenConfig);
   }
   getGrueById(id: number){
-    return this.http.get(`${apiUrl}/api/gruas/${id}`, this.tokenConfig);
+    return this.http.get<Grue>(`${apiUrl}/api/gruas/${id}`, this.tokenConfig);
   }
   updateGrueById(id: number){
     return this.http.put(`${apiUrl}/api/gruas/${id}`, this.tokenConfig);

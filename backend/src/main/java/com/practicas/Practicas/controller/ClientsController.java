@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/clientes")
+@CrossOrigin("http://localhost:4200")
 public class ClientsController {
 
     @Autowired
@@ -28,6 +29,15 @@ public class ClientsController {
 
             return new ResponseEntity<>(clientMinifiedList, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Client> findClientByMail(@PathVariable(name = "email") String email){
+        try{
+            return new ResponseEntity<>(clientsService.findByEmail(email), HttpStatus.OK);
+        } catch (Exception e ){
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

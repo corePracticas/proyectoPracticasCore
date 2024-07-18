@@ -1,2 +1,18 @@
-<p>dashboard works!</p>
-<router-outlet></router-outlet>
+<section class="dashboard-container">
+  <div class="card flex justify-content-center">
+    <p-menu [model]="items"/>
+    <p-dialog
+      header="Cerrar Sesión"
+      [modal]="true"
+      [(visible)]="logoutDialogVisible"
+      [style]="{ width: '25rem' }"
+      [closable]="true"
+    >
+      <div style="display: flex; width: 100%; justify-content: space-around;">
+        <p-button severity="secondary" label="No" (onClick)="closeSessionDialog()"></p-button>
+        <p-button severity="success" label="Si" (onClick)="handleLogOut()"></p-button>
+      </div>
+    </p-dialog>
+  </div>
+  <router-outlet></router-outlet>
+</section>

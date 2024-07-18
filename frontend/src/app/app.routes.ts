@@ -12,8 +12,9 @@ export const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'grues', component: GruesComponent },
-      { path: 'rents', component: RentsComponent },
+      { path: 'gruas', component: GruesComponent },
+      { path: 'rentas', component: RentsComponent },
+      { path: '', pathMatch: 'full', component: GruesComponent},
     ]
   },
   {path: 'login', component: LoginComponent},

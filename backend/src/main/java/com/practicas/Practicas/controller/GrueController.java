@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/gruas")
+@CrossOrigin("http://localhost:4200")
 public class GrueController {
     @Autowired
     IGrueService grueService;

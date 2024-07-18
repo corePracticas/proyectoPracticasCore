@@ -1,7 +1,12 @@
-.dashboard-container {
-  padding: 2rem;
+.dashboard-container{
+  display: flex;
+  padding: 1rem;
+  gap: .5rem;
+  
 }
 
-.p-field {
-  margin-bottom: 1rem;
+@media (max-width: 768px) {
+  .dashboard-container{
+    flex-direction: column;
+  }   
 }

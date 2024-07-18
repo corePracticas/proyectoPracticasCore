@@ -7,14 +7,13 @@ export enum RentStatus{
   CANCELED = 'CANCELED',
 }
 export type Rent = {
-  id: number;
+  id?: number;
   startDate: Date;
   endDate: Date;
   totalPrice: number;
   status: RentStatus;
   createdAt: Date;
   updatedAt: Date;
-
-  client: Client;
-  grue: Grue;
+  client: Client | null | undefined; 
+  grue: Grue | null | undefined;
 }
